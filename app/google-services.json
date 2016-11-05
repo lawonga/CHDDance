@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "934061207185",
+    "firebase_url": "https://capable-respect-124604.firebaseio.com",
+    "project_id": "capable-respect-124604",
+    "storage_bucket": "capable-respect-124604.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934061207185:android:6fdd0370d4b5bedd",
+        "android_client_info": {
+          "package_name": "com.dance.chd.chddance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934061207185-an9ng0msijk03836ib804cchrpgb347i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLNeTuVwqTZbgOX0QE4y7TIy3Y_XuWkPc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

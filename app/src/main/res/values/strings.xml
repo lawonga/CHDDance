@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CHDDance</string>
+    <string name="button_send">Send</string>
+    <string name="button_clear">Clear</string>
+</resources>
