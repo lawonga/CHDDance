@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_gravity="bottom"
-              android:gravity="bottom"
               android:layout_width="wrap_content"
-              android:layout_height="512dp">
+              android:layout_height="wrap_content"
+              android:layout_gravity="bottom|center_horizontal"
+              android:gravity="bottom|center_horizontal"
+              android:orientation="vertical">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:background="@drawable/shadow"
+        android:layout_width="224dp"
         android:layout_height="512dp"
+        android:elevation="2dp"
         android:src="@drawable/onedollar_vertical"/>
 
 </LinearLayout>

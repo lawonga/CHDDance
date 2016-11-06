@@ -2,11 +2,12 @@ package com.dance.chd.chddance.helper;
 
 import android.util.SparseArray;
 
+import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.view.MainActivity;
-import com.dance.chd.chddance.view.fragment.DancerMap;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -14,7 +15,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -75,28 +75,36 @@ public class MapHelper {
         for (MarkerOptions markerOptions : markers) {
             if (ourMarker == null) {
                 ourMarker = googleMap.addMarker(markerOptions);
+                ourMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.stripper));
             } else {
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.stripper));
                 googleMap.addMarker(markerOptions);
             }
         }
 
-        subscription = Observable.create(new Observable.OnSubscribe<Void>() {
+        subscription = Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override
-            public void call(Subscriber<? super Void> subscriber) {
+            public void call(Subscriber<? super Boolean> subscriber) {
                 for (int i = 7; i < 17; i++) {
                     try {
-                        Thread.sleep(700);
+                        Thread.sleep(650);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    subscriber.onNext(null);
+                    subscriber.onNext(false);
+                }
+                subscriber.onNext(true);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 subscriber.onCompleted();
             }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Void>() {
+                .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
                         MainActivity mainActivity = (MainActivity) dancerMap.getActivity();
@@ -109,8 +117,8 @@ public class MapHelper {
                     }
 
                     @Override
-                    public void onNext(Void aVoid) {
-                        if (sparseArray.get(frame) != null) {
+                    public void onNext(Boolean aBoolean) {
+                        if (sparseArray.get(frame) != null && !aBoolean) {
                             ourMarker.setPosition(sparseArray.get(frame));
                             CameraPosition cameraPosition = new CameraPosition.Builder()
                                     .zoom(17)
@@ -118,6 +126,14 @@ public class MapHelper {
                                     .build();                   // Creates a CameraPosition from the builder
                             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                             frame += 1;
+                        } else if (aBoolean) {
+                            LatLng latLng = new LatLng(googleMap.getMyLocation().getLatitude(), googleMap.getMyLocation().getLongitude());
+                            ourMarker.setPosition(latLng);
+                            CameraPosition cameraPosition = new CameraPosition.Builder()
+                                    .zoom(17)
+                                    .target(latLng)      // Sets the center of the map to Mountain View
+                                    .build();                   // Creates a CameraPosition from the builder
+                            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                         } else {
                             subscription.unsubscribe();
                         }

@@ -1,34 +1,32 @@
 package com.dance.chd.chddance.view;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.dance.chd.chddance.R;
-import com.dance.chd.chddance.adapter.ExoticListAdapter;
 import com.dance.chd.chddance.view.fragment.DancerMap;
 import com.dance.chd.chddance.view.fragment.ExoticDancerList;
+import com.dance.chd.chddance.view.fragment.ManWOmanPagerFragment;
 import com.dance.chd.chddance.view.fragment.PartyMode;
-import com.google.android.gms.maps.MapFragment;
-
-import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity implements
         ExoticDancerList.OnFragmentInteractionListener,
         PartyMode.OnFragmentInteractionListener,
-DancerMap.OnFragmentInteractionListener{
+        DancerMap.OnFragmentInteractionListener,
+        ManWOmanPagerFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setElevation(0);
+        }
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame_main, ExoticDancerList.newInstance())
+                .add(R.id.frame_main, ManWOmanPagerFragment.newInstance())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .commit();
     }
@@ -42,6 +40,9 @@ DancerMap.OnFragmentInteractionListener{
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .addToBackStack(null)
                 .commit();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     /**
@@ -54,6 +55,17 @@ DancerMap.OnFragmentInteractionListener{
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_main);
+        if (!(fragment instanceof PartyMode)) {
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().show();
+            }
+        }
     }
 
     /**

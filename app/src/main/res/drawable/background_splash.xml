@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@color/colorWhite"/>
+
+    <item>
+        <bitmap
+            android:adjustViewBounds="true"
+            android:gravity="center"
+            android:scaleHeight="20%"
+            android:scaleType="fitXY"
+            android:scaleWidth="20%"
+            android:src="@drawable/exotsmall"/>
+    </item>
+
+</layer-list>

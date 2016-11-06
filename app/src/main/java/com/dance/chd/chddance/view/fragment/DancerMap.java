@@ -107,7 +107,7 @@ public class DancerMap extends Fragment implements OnMapReadyCallback {
         }
         googleMap.setMyLocationEnabled(true);
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(49.28649890223698, -123.12401097267866))      // Sets the center of the map to Mountain View
+                .target(new LatLng(49.28234902951551, -123.10998033732177))      // Sets the center of the map to Mountain View
                 .zoom(17)                   // Sets the zoom
                 .build();                   // Creates a CameraPosition from the builder
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

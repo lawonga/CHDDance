@@ -1,7 +1,6 @@
 package com.dance.chd.chddance.view.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.adapter.ExoticListAdapter;
+import com.dance.chd.chddance.enums.Key;
 import com.dance.chd.chddance.helper.DancerHelper;
 
 import butterknife.BindView;
@@ -33,6 +33,7 @@ public class ExoticDancerList extends Fragment {
     @BindView(R.id.exotic_list_buttonset) LinearLayout buttonSet;
     @BindView(R.id.button_send) Button send;
     @BindView(R.id.button_clear) Button clear;
+    private boolean gender;
     private ExoticListAdapter exoticListAdapter;
     private OnFragmentInteractionListener mListener;
 
@@ -44,11 +45,13 @@ public class ExoticDancerList extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param b
      * @return A new instance of fragment ExoticDancerList.
      */
-    public static ExoticDancerList newInstance() {
+    public static ExoticDancerList newInstance(boolean b) {
         ExoticDancerList fragment = new ExoticDancerList();
         Bundle args = new Bundle();
+        args.putBoolean(Key.GENDER.name(), b);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +59,10 @@ public class ExoticDancerList extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            this.gender = getArguments().getBoolean(Key.GENDER.name());
+        }
     }
 
     @Override
@@ -66,7 +73,11 @@ public class ExoticDancerList extends Fragment {
         ButterKnife.bind(this, view);
 
         // Adapter
-        exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getDancerList());
+        if (gender){
+            exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getFemaleDancerList());
+        } else {
+            exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getMaleDancerList());
+        }
 
         // Recycler & layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());

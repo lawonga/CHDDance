@@ -16,6 +16,7 @@
         android:weightSum="3">
 
         <Button
+            style="@style/ButtonTheme"
             android:id="@+id/button_cheap"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -23,6 +24,7 @@
             android:text="@string/button_cheap"/>
 
         <Button
+            style="@style/ButtonTheme"
             android:id="@+id/button_intermediate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -30,6 +32,7 @@
             android:text="@string/button_intermediate"/>
 
         <Button
+            style="@style/ButtonTheme"
             android:id="@+id/button_expensive"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -39,8 +42,10 @@
     </LinearLayout>
 
     <FrameLayout
+        android:clipChildren="false"
         android:layout_gravity="bottom"
         android:gravity="bottom"
+        android:clipToPadding="false"
         android:id="@+id/money_drag_image_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,10 +1,11 @@
 package com.dance.chd.chddance.view.fragment;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,9 +18,16 @@ import android.widget.LinearLayout;
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.enums.Key;
 
+import java.util.Random;
+import java.util.concurrent.Callable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Single;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +42,8 @@ public class PartyMode extends Fragment {
     private static String TAG = PartyMode.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private LayoutInflater inflater;
+    private Subscription subscription;
+    private MediaPlayer player;
 
     public PartyMode() {
         // Required empty public constructor
@@ -72,6 +82,26 @@ public class PartyMode extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Start playing sound
+        subscription = Single.fromCallable(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                player = MediaPlayer.create(getActivity(), R.raw.never_gonna_give_you_up);
+                player.setLooping(true); // Set looping
+                player.setVolume(100, 100);
+                player.start();
+                return null;
+            }
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
     /**
      * Add this when the previous one is removed from view
      *
@@ -86,13 +116,10 @@ public class PartyMode extends Fragment {
         // Inflate our money dragging thing
         if (keyEnum.name().equals(Key.CHEAP.name())) {
             newView = (LinearLayout) inflater.inflate(R.layout.money_cheap, frameLayout, false); // CHEAP
-            newView.setVerticalGravity(Gravity.BOTTOM);
         } else if (keyEnum.name().equals(Key.INTERMEDIATE.name())) {
             newView = (LinearLayout) inflater.inflate(R.layout.money_intermediate, frameLayout, false); // INTERMEDIATE
-            newView.setVerticalGravity(Gravity.BOTTOM);
         } else {
             newView = (LinearLayout) inflater.inflate(R.layout.money_expensive, frameLayout, false); // EXPENSIVE
-            newView.setVerticalGravity(Gravity.BOTTOM);
         }
 
         // Set listeners
@@ -126,18 +153,23 @@ public class PartyMode extends Fragment {
     }
 
     private void flingOffScreen(final View view, float fromY) {
-        TranslateAnimation translateAnimation = new TranslateAnimation(view.getX(), view.getX(), fromY, fromY - 5000);
+        Random random = new Random();
+        float finalNextFloat = random.nextFloat() * (2000 + 2000) - 2000;
+        TranslateAnimation translateAnimation = new TranslateAnimation(view.getX(), view.getX() + finalNextFloat, fromY, fromY - 5000);
         translateAnimation.setDuration(500);
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 //before animation
+                view.bringToFront();
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 //after animation
-                ((ViewGroup) view.getParent()).removeView(view);
+                if (view != null) {
+                    ((ViewGroup) view.getParent()).removeView(view);
+                }
             }
 
             @Override
@@ -163,6 +195,10 @@ public class PartyMode extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        player.stop();
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
 
     @OnClick(R.id.button_expensive)
@@ -173,7 +209,7 @@ public class PartyMode extends Fragment {
     }
 
     @OnClick(R.id.button_intermediate)
-    public void onIntermediatePressed(){
+    public void onIntermediatePressed() {
         frameLayout.removeAllViews();
         addMoneyDraggingThing(inflater, Key.INTERMEDIATE);
         addMoneyDraggingThing(inflater, Key.INTERMEDIATE);

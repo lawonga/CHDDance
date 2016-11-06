@@ -7,6 +7,6 @@ package com.dance.chd.chddance.enums;
 public enum Key {
     CHEAP,
     INTERMEDIATE,
-    EXPENSIVE;
+    EXPENSIVE, GENDER;
 
 }

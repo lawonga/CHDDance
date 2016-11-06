@@ -22,6 +22,7 @@
         android:layout_alignParentBottom="true">
 
         <Button
+            style="@style/ButtonTheme"
             android:text="@string/button_clear"
             android:layout_weight="1"
             android:id="@+id/button_clear"
@@ -29,6 +30,7 @@
             android:layout_height="match_parent"/>
 
         <Button
+            style="@style/ButtonTheme"
             android:text="@string/button_send"
             android:layout_weight="1"
             android:id="@+id/button_send"

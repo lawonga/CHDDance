@@ -1,10 +1,7 @@
 <resources>
-    <string name="app_name">CHDDance</string>
+    <string name="app_name">EXOT DANCE CLUB</string>
     <string name="button_send">Send</string>
     <string name="button_clear">Clear</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_cheap">Cheap</string>
     <string name="button_expensive">Expensive</string>
     <string name="button_intermediate">Intermediate</string>
