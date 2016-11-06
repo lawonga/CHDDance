@@ -43,10 +43,11 @@ public class MapHelper {
         sparseArray.clear();
         frame = 7;
 
-        markers.add(new MarkerOptions().position(new LatLng(49.246383, -123.116437)));
-        markers.add(new MarkerOptions().position(new LatLng(49.246673, -123.116547)));
-        markers.add(new MarkerOptions().position(new LatLng(49.246263, -123.116127)));
-        markers.add(new MarkerOptions().position(new LatLng(49.246453, -123.116317)));
+        markers.add(new MarkerOptions().position(new LatLng(49.28412558958766, -123.10809340327978)).icon(BitmapDescriptorFactory.fromResource(R.drawable.stripper2)));
+        markers.add(new MarkerOptions().position(new LatLng(49.28066557973033, -123.10777690261602)).icon(BitmapDescriptorFactory.fromResource(R.drawable.stripper3)));
+        markers.add(new MarkerOptions().position(new LatLng(49.28329122889263, -123.11271719634534)).icon(BitmapDescriptorFactory.fromResource(R.drawable.stripper4)));
+        markers.add(new MarkerOptions().position(new LatLng(49.28486130248225, -123.11038032174109)).icon(BitmapDescriptorFactory.fromResource(R.drawable.stripper2)));
+        markers.add(new MarkerOptions().position(new LatLng(49.282923143395685, -123.10541220009328)).icon(BitmapDescriptorFactory.fromResource(R.drawable.stripper3)));
 
         // Add 10 frames
         sparseArray.put(0, new LatLng(49.286498902236985, -123.12401097267866));
@@ -77,7 +78,6 @@ public class MapHelper {
                 ourMarker = googleMap.addMarker(markerOptions);
                 ourMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.stripper));
             } else {
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.stripper));
                 googleMap.addMarker(markerOptions);
             }
         }

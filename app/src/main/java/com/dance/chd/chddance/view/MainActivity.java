@@ -11,6 +11,7 @@ import com.dance.chd.chddance.view.fragment.DancerMap;
 import com.dance.chd.chddance.view.fragment.ExoticDancerList;
 import com.dance.chd.chddance.view.fragment.ManWomanPagerFragment;
 import com.dance.chd.chddance.view.fragment.PartyMode;
+import com.dance.chd.chddance.view.fragment.PayMoreMoney;
 
 public class MainActivity extends AppCompatActivity implements
         ExoticDancerList.OnFragmentInteractionListener,
@@ -81,5 +82,20 @@ public class MainActivity extends AppCompatActivity implements
         if (fragment instanceof ExoticDancerList) {
             ((ManWomanPagerFragment) fragment).onClear();
         }
+    }
+
+    @Override
+    public void payMoreMoney() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_main, PayMoreMoney.newInstance())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .commit();
+    }
+
+    public void onMoneyPaid() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_main, PartyMode.newInstance())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .commit();
     }
 }

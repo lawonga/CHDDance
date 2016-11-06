@@ -5,8 +5,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.util.StringBuilderPrinter;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +17,7 @@ import android.widget.TextView;
 
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.enums.Key;
+import com.dance.chd.chddance.helper.PayMoreMoneyHelper;
 
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -47,7 +46,6 @@ public class PartyMode extends Fragment {
     private LayoutInflater inflater;
     private Subscription subscription;
     private MediaPlayer player;
-    private double totalMoney = 25.00d;
 
     public PartyMode() {
         // Required empty public constructor
@@ -69,6 +67,7 @@ public class PartyMode extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PayMoreMoneyHelper.getInstance().getMoneys();
     }
 
     @Override
@@ -84,9 +83,6 @@ public class PartyMode extends Fragment {
         addMoneyDraggingThing(inflater, Key.CHEAP);
         addMoneyDraggingThing(inflater, Key.CHEAP);
 
-        // Update current money
-        updateCurrentMoney();
-
         return view;
     }
 
@@ -98,7 +94,7 @@ public class PartyMode extends Fragment {
         subscription = Single.fromCallable(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                player = MediaPlayer.create(getActivity(), R.raw.never_gonna_give_you_up);
+                player = MediaPlayer.create(getActivity(), R.raw.what_is_love);
                 player.setLooping(true); // Set looping
                 player.setVolume(100, 100);
                 player.start();
@@ -147,11 +143,22 @@ public class PartyMode extends Fragment {
                             finalNewView.setOnTouchListener(null);
                             addMoneyDraggingThing(inflater, keyEnum);
                             if (keyEnum == Key.CHEAP) {
-                                totalMoney -= 0.02d;
+                                if (PayMoreMoneyHelper.getInstance().getMoneys() - 0.02d < 0){
+                                    mListener.payMoreMoney();
+                                }
+                                PayMoreMoneyHelper.getInstance().setMoneys(PayMoreMoneyHelper.getInstance().getMoneys() - 0.02d);
                             } else if (keyEnum == Key.INTERMEDIATE) {
-                                totalMoney -= 0.05d;
+                                PayMoreMoneyHelper.getInstance().setMoneys(PayMoreMoneyHelper.getInstance().getMoneys() - 0.25d);
+
+                                if (PayMoreMoneyHelper.getInstance().getMoneys() - 0.25d < 0){
+                                    mListener.payMoreMoney();
+                                }
                             } else if (keyEnum == Key.EXPENSIVE) {
-                                totalMoney += 0.50d;
+                                PayMoreMoneyHelper.getInstance().setMoneys(PayMoreMoneyHelper.getInstance().getMoneys() - 5.00d);
+
+                                if (PayMoreMoneyHelper.getInstance().getMoneys() - 5.00d < 0){
+                                    mListener.payMoreMoney();
+                                }
                             }
                             updateCurrentMoney();
                         }
@@ -207,6 +214,12 @@ public class PartyMode extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        updateCurrentMoney();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -217,11 +230,11 @@ public class PartyMode extends Fragment {
     }
 
     public void updateCurrentMoney() {
-        currentMoney.setText("$" + String.format("%.2f", totalMoney));
+        currentMoney.setText("CURRENT ACCOUNT BALANCE\n$" + String.format("%.2f", PayMoreMoneyHelper.getInstance().getMoneys()));
 
         // Go to pay more $$ screen
-        if (totalMoney <= 0) {
-
+        if (PayMoreMoneyHelper.getInstance().getMoneys() <= 0) {
+            mListener.payMoreMoney();
         }
     }
 
@@ -250,5 +263,6 @@ public class PartyMode extends Fragment {
      * Communication with the Activity
      */
     public interface OnFragmentInteractionListener {
+        void payMoreMoney();
     }
 }

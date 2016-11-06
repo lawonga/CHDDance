@@ -6,11 +6,13 @@
           android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/map_disclaimer_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:layout_marginTop="20dp"
-        android:padding="@dimen/heading_1"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/heading_0"
         android:text="YOUR EXOTS ARE ON THEIR WAY"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/heading_1"

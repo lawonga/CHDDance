@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="heading_0">28sp</dimen>
+    <dimen name="heading_G">40sp</dimen>
     <dimen name="heading_1">24sp</dimen>
     <dimen name="heading_2">20sp</dimen>
     <dimen name="heading_3">18sp</dimen>

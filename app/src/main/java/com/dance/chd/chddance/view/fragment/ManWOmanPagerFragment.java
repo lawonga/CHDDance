@@ -28,7 +28,7 @@ public class ManWomanPagerFragment extends Fragment {
     @BindView(R.id.button_send) Button send;
     @BindView(R.id.button_clear) Button clear;
     private OnFragmentInteractionListener mListener;
-    ManWomanPagerAdapter manWomanPagerAdapterAdapter;
+    private ManWomanPagerAdapter manWomanPagerAdapterAdapter;
 
     public ManWomanPagerFragment() {
         // Required empty public constructor

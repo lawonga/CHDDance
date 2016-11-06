@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:background="@color/colorWhite"
+              android:orientation="vertical"
+              tools:context="com.dance.chd.chddance.view.fragment.PayMoreMoney">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="ENTER AN AMOUONT TO RELOAD"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/heading_1"/>
+
+    <EditText
+        android:id="@+id/reload_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:text="100.00"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/heading_0"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/reload_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="PAY"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/heading_0"
+        android:textStyle="bold"/>
+
+</LinearLayout>

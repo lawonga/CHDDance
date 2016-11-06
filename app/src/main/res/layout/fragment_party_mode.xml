@@ -48,7 +48,7 @@
         android:layout_gravity="top|center_horizontal"
         android:gravity="top|center_horizontal"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/heading_1"
+        android:textSize="@dimen/heading_G"
         android:textStyle="bold"/>
 
     <FrameLayout

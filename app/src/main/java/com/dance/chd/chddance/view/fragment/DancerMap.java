@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.adapter.ExoticListAdapter;
@@ -23,9 +24,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-
 import java.util.concurrent.Callable;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,6 +42,7 @@ import rx.schedulers.Schedulers;
  * create an instance of this fragment.
  */
 public class DancerMap extends Fragment implements OnMapReadyCallback {
+    @BindView(R.id.map_disclaimer_message) TextView disclaimer;
     private static String TAG = DancerMap.class.getSimpleName();
     private ExoticListAdapter exoticListAdapter;
     private OnFragmentInteractionListener mListener;
@@ -88,7 +90,7 @@ public class DancerMap extends Fragment implements OnMapReadyCallback {
             mapFragment.getMapAsync(this);
 
             // load the animation
-            animBlink.start();
+            disclaimer.startAnimation(animBlink);
         }
         return view;
     }
