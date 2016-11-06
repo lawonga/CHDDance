@@ -13,6 +13,12 @@
         android:gravity="center"
         android:src="@drawable/common_full_open_on_phone"/>
 
+    <ImageView
+        android:id="@+id/exotic_item_premium"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/premium"/>
+
     <TextView
         android:id="@+id/exotic_item_type"
         android:layout_width="wrap_content"
@@ -30,29 +36,31 @@
         android:gravity="center">
 
         <ImageView
-            android:tint="@color/colorPrimary"
             android:id="@+id/exotic_item_remove"
             android:layout_width="64dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_remove_box_black_24dp"/>
+            android:src="@drawable/ic_remove_box_black_24dp"
+            android:tint="@color/colorPrimary"/>
 
         <EditText
             android:id="@+id/exotic_item_quantity"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:minWidth="64dp"
             android:inputType="number"
+            android:minWidth="64dp"
             android:selectAllOnFocus="true"
             android:text="0"
-            android:textSize="@dimen/heading_2"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/heading_1"
+            android:textStyle="bold"/>
 
         <ImageView
-            android:tint="@color/colorPrimary"
             android:id="@+id/exotic_item_add"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
-            android:src="@drawable/ic_add_box_black_24dp"/>
+            android:src="@drawable/ic_add_box_black_24dp"
+            android:tint="@color/colorPrimary"/>
     </LinearLayout>
 
     <View

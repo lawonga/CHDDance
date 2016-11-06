@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.adapter.ExoticListAdapter;
@@ -43,6 +45,7 @@ public class DancerMap extends Fragment implements OnMapReadyCallback {
     private ExoticListAdapter exoticListAdapter;
     private OnFragmentInteractionListener mListener;
     private SupportMapFragment mapFragment;
+    private Animation animBlink;
 
     public DancerMap() {
         // Required empty public constructor
@@ -70,6 +73,11 @@ public class DancerMap extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = null;
+
+        // Animation
+        animBlink = AnimationUtils.loadAnimation(getContext(),
+                R.anim.blink);
+
         // Get our map
         if (mapFragment == null) {
             // Inflate the layout for this fragment
@@ -78,8 +86,10 @@ public class DancerMap extends Fragment implements OnMapReadyCallback {
 
             mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
-        }
 
+            // load the animation
+            animBlink.start();
+        }
         return view;
     }
 

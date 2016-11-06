@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.enums.Key;
@@ -39,11 +41,13 @@ import rx.schedulers.Schedulers;
  */
 public class PartyMode extends Fragment {
     @BindView(R.id.money_drag_image_layout) FrameLayout frameLayout;
+    @BindView(R.id.current_money) TextView currentMoney;
     private static String TAG = PartyMode.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private LayoutInflater inflater;
     private Subscription subscription;
     private MediaPlayer player;
+    private double totalMoney = 25.00d;
 
     public PartyMode() {
         // Required empty public constructor
@@ -78,6 +82,10 @@ public class PartyMode extends Fragment {
         // Add money dragging thing
         addMoneyDraggingThing(inflater, Key.CHEAP);
         addMoneyDraggingThing(inflater, Key.CHEAP);
+        addMoneyDraggingThing(inflater, Key.CHEAP);
+
+        // Update current money
+        updateCurrentMoney();
 
         return view;
     }
@@ -138,8 +146,15 @@ public class PartyMode extends Fragment {
                             flingOffScreen(view, (float) (event.getRawY() - (view.getHeight() / 1.5)));
                             finalNewView.setOnTouchListener(null);
                             addMoneyDraggingThing(inflater, keyEnum);
+                            if (keyEnum == Key.CHEAP) {
+                                totalMoney -= 0.02d;
+                            } else if (keyEnum == Key.INTERMEDIATE) {
+                                totalMoney -= 0.05d;
+                            } else if (keyEnum == Key.EXPENSIVE) {
+                                totalMoney += 0.50d;
+                            }
+                            updateCurrentMoney();
                         }
-                        Log.e(TAG, "onTouch: " + String.valueOf(oldY[0] - event.getRawY()));
                         break;
                 }
 
@@ -198,6 +213,15 @@ public class PartyMode extends Fragment {
         player.stop();
         if (!subscription.isUnsubscribed()) {
             subscription.unsubscribe();
+        }
+    }
+
+    public void updateCurrentMoney() {
+        currentMoney.setText("$" + String.format("%.2f", totalMoney));
+
+        // Go to pay more $$ screen
+        if (totalMoney <= 0) {
+
         }
     }
 

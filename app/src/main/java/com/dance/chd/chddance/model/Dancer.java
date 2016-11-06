@@ -51,4 +51,12 @@ public class Dancer {
     public void setDrawable(int drawable) {
         this.drawable = drawable;
     }
+
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
+    }
 }

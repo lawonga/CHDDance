@@ -1,6 +1,7 @@
 package com.dance.chd.chddance.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,10 +46,17 @@ public class ExoticListAdapter extends RecyclerView.Adapter<ExoticListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ExoticListAdapter.ViewHolder holder, int position) {
-        holder.editTextQuantity.setText(String.valueOf(dancerList.get(position).getQuantity()));
+        Dancer dancer = dancerList.get(position);
+        holder.editTextQuantity.setText(String.valueOf(dancer.getQuantity()));
         holder.itemType.setText(dancerList.get(position).getName());
         if (dancerList.get(position).getDrawable() != 0) {
-            Glide.with(context).load(dancerList.get(position).getDrawable()).into(holder.exoticImageView);
+            Glide.with(context).load(dancer.getDrawable()).into(holder.exoticImageView);
+        }
+        if (!dancer.isPremium()) {
+            holder.premium.setVisibility(View.GONE);
+        } else {
+            holder.add.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+            holder.remove.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         }
     }
 
@@ -62,6 +70,7 @@ public class ExoticListAdapter extends RecyclerView.Adapter<ExoticListAdapter.Vi
         @BindView(R.id.exotic_item_type) TextView itemType;
         @BindView(R.id.exotic_item_quantity_layout) LinearLayout linearLayout;
         @BindView(R.id.exotic_item_add) ImageView add;
+        @BindView(R.id.exotic_item_premium) ImageView premium;
         @BindView(R.id.exotic_item_remove) ImageView remove;
         @BindView(R.id.exotic_item_quantity) EditText editTextQuantity;
 
