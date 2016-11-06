@@ -30,9 +30,9 @@
 
         <ImageView
             android:id="@+id/exotic_item_remove"
-            android:layout_width="16dp"
+            android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_remove_black_48dp"/>
+            android:src="@drawable/ic_remove_box_black_24dp"/>
 
         <EditText
             android:id="@+id/exotic_item_quantity"
@@ -45,9 +45,9 @@
 
         <ImageView
             android:id="@+id/exotic_item_add"
-            android:layout_width="16dp"
+            android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_add_black_48dp"/>
+            android:src="@drawable/ic_add_box_black_24dp"/>
     </LinearLayout>
 
     <View

@@ -33,7 +33,7 @@ public class ExoticDancerList extends Fragment {
     @BindView(R.id.exotic_list_buttonset) LinearLayout buttonSet;
     @BindView(R.id.button_send) Button send;
     @BindView(R.id.button_clear) Button clear;
-
+    private ExoticListAdapter exoticListAdapter;
     private OnFragmentInteractionListener mListener;
 
     public ExoticDancerList() {
@@ -66,7 +66,7 @@ public class ExoticDancerList extends Fragment {
         ButterKnife.bind(this, view);
 
         // Adapter
-        ExoticListAdapter exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getDancerList());
+        exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getDancerList());
 
         // Recycler & layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -107,6 +107,14 @@ public class ExoticDancerList extends Fragment {
     @OnClick(R.id.button_clear)
     public void clear() {
         mListener.onClear();
+    }
+
+    /**
+     * Clear
+     */
+    public void onClear() {
+        DancerHelper.getInstance().clearDancerList();
+        exoticListAdapter.notifyDataSetChanged();
     }
 
     /**

@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                tools:context="com.dance.chd.chddance.view.fragment.PartyMode">
+
+    <LinearLayout
+        android:id="@+id/exotic_party_buttonset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/button_cheap"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/button_cheap"/>
+
+        <Button
+            android:id="@+id/button_intermediate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/button_intermediate"/>
+
+        <Button
+            android:id="@+id/button_expensive"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/button_expensive"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:id="@+id/money_drag_image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/exotic_party_buttonset"/>
+</RelativeLayout>
