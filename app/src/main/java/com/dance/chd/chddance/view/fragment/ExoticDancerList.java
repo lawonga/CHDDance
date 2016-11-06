@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.adapter.ExoticListAdapter;
@@ -30,9 +31,6 @@ import butterknife.OnClick;
  */
 public class ExoticDancerList extends Fragment {
     @BindView(R.id.exotic_list_recycler) RecyclerView recyclerView;
-    @BindView(R.id.exotic_list_buttonset) LinearLayout buttonSet;
-    @BindView(R.id.button_send) Button send;
-    @BindView(R.id.button_clear) Button clear;
     private boolean gender;
     private ExoticListAdapter exoticListAdapter;
     private OnFragmentInteractionListener mListener;
@@ -73,10 +71,10 @@ public class ExoticDancerList extends Fragment {
         ButterKnife.bind(this, view);
 
         // Adapter
-        if (gender){
-            exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getFemaleDancerList());
+        if (gender) {
+            exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getFemaleDancerList(), this);
         } else {
-            exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getMaleDancerList());
+            exoticListAdapter = new ExoticListAdapter(DancerHelper.getInstance().getMaleDancerList(), this);
         }
 
         // Recycler & layout
@@ -105,37 +103,26 @@ public class ExoticDancerList extends Fragment {
     }
 
     /**
-     * Send
+     * Notify data set changed
      */
-    @OnClick(R.id.button_send)
-    public void send() {
-        mListener.onSend();
+    public void notifyAdapterChanged() {
+        if (recyclerView != null) {
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     /**
-     * Clear
+     * Gets our pager to update the stats
      */
-    @OnClick(R.id.button_clear)
-    public void clear() {
-        mListener.onClear();
-    }
-
-    /**
-     * Clear
-     */
-    public void onClear() {
-        DancerHelper.getInstance().clearDancerList();
-        exoticListAdapter.notifyDataSetChanged();
+    public void updateSubtotal() {
+        ManWomanPagerFragment manWomanPagerFragment = (ManWomanPagerFragment) getParentFragment();
+        manWomanPagerFragment.updateSubtotal();
     }
 
     /**
      * Communication with the Activity
      */
     public interface OnFragmentInteractionListener {
-
-        void onSend();
-
-        void onClear();
 
     }
 }

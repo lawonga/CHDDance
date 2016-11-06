@@ -130,7 +130,7 @@ public class MapHelper {
                             LatLng latLng = new LatLng(googleMap.getMyLocation().getLatitude(), googleMap.getMyLocation().getLongitude());
                             ourMarker.setPosition(latLng);
                             CameraPosition cameraPosition = new CameraPosition.Builder()
-                                    .zoom(17)
+                                    .zoom(19)
                                     .target(latLng)      // Sets the center of the map to Mountain View
                                     .build();                   // Creates a CameraPosition from the builder
                             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

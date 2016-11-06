@@ -4,18 +4,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.view.fragment.DancerMap;
 import com.dance.chd.chddance.view.fragment.ExoticDancerList;
-import com.dance.chd.chddance.view.fragment.ManWOmanPagerFragment;
+import com.dance.chd.chddance.view.fragment.ManWomanPagerFragment;
 import com.dance.chd.chddance.view.fragment.PartyMode;
 
 public class MainActivity extends AppCompatActivity implements
         ExoticDancerList.OnFragmentInteractionListener,
         PartyMode.OnFragmentInteractionListener,
         DancerMap.OnFragmentInteractionListener,
-        ManWOmanPagerFragment.OnFragmentInteractionListener {
+        ManWomanPagerFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,23 +27,9 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame_main, ManWOmanPagerFragment.newInstance())
+                .add(R.id.frame_main, ManWomanPagerFragment.newInstance())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .commit();
-    }
-
-    /**
-     * Go to party mode
-     */
-    public void onGoToPartyMode() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame_main, PartyMode.newInstance())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                .addToBackStack(null)
-                .commit();
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
     }
 
     /**
@@ -55,16 +42,33 @@ public class MainActivity extends AppCompatActivity implements
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .addToBackStack(null)
                 .commit();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * Go to party mode
+     */
+    public void onGoToPartyMode() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frame_main, PartyMode.newInstance())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_main);
-        if (!(fragment instanceof PartyMode)) {
+        if (fragment instanceof ManWomanPagerFragment) {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().show();
             }
+        } else if (!(fragment instanceof PartyMode)) {
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         }
     }
 
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onClear() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_main);
         if (fragment instanceof ExoticDancerList) {
-            ((ExoticDancerList) fragment).onClear();
+            ((ManWomanPagerFragment) fragment).onClear();
         }
     }
 }

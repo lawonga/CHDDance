@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dance.chd.chddance.R;
 import com.dance.chd.chddance.model.Dancer;
+import com.dance.chd.chddance.view.fragment.ExoticDancerList;
 
 import java.util.List;
 
@@ -27,9 +28,11 @@ import butterknife.OnClick;
 public class ExoticListAdapter extends RecyclerView.Adapter<ExoticListAdapter.ViewHolder> {
     private List<Dancer> dancerList;
     private Context context;
+    private ExoticDancerList exoticDancerList;
 
-    public ExoticListAdapter(List<Dancer> dancerList) {
+    public ExoticListAdapter(List<Dancer> dancerList, ExoticDancerList exoticDancerList) {
         this.dancerList = dancerList;
+        this.exoticDancerList = exoticDancerList;
     }
 
     @Override
@@ -72,6 +75,7 @@ public class ExoticListAdapter extends RecyclerView.Adapter<ExoticListAdapter.Vi
             int quantity = dancerList.get(getAdapterPosition()).getQuantity();
             dancerList.get(getAdapterPosition()).setQuantity(quantity += 1);
             editTextQuantity.setText(String.valueOf(quantity));
+            exoticDancerList.updateSubtotal();
         }
 
         @OnClick(R.id.exotic_item_remove)
@@ -83,6 +87,7 @@ public class ExoticListAdapter extends RecyclerView.Adapter<ExoticListAdapter.Vi
                 dancerList.get(getAdapterPosition()).setQuantity(quantity -= 1);
             }
             editTextQuantity.setText(String.valueOf(quantity));
+            exoticDancerList.updateSubtotal();
         }
     }
 }

@@ -44,6 +44,33 @@ public class DancerHelper {
         this.femaleDancerList = femaleDancerList;
     }
 
+    /**
+     * Female dancer count
+     * @return
+     */
+    public int getFemaleDancerCount() {
+        int quantity = 0;
+        for (Dancer dancer : femaleDancerList) {
+            quantity += dancer.getQuantity();
+        }
+        return quantity;
+    }
+
+    /**
+     * Male dancer count
+     * @return
+     */
+    public int getMaleDancerCount() {
+        int quantity = 0;
+        for (Dancer dancer : maleDancerList) {
+            quantity += dancer.getQuantity();
+        }
+        return quantity;
+    }
+
+    /**
+     * Clear dancer count
+     */
     public void clearDancerList() {
         for (Dancer dancer : femaleDancerList) {
             dancer.setQuantity(0);

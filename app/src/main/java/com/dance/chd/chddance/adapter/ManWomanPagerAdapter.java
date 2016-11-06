@@ -3,6 +3,8 @@ package com.dance.chd.chddance.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
 import com.dance.chd.chddance.view.fragment.ExoticDancerList;
 
@@ -12,7 +14,8 @@ import com.dance.chd.chddance.view.fragment.ExoticDancerList;
 
 public class ManWomanPagerAdapter extends FragmentPagerAdapter {
     private static int NUM_ITEMS = 2; // There are two items in our page. Active and history.
-    private static final int MAN = 1, WOMAN = 0; // KeyFragment locations
+    public static final int MAN = 1, WOMAN = 0; // KeyFragment locations
+    SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
     public ManWomanPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -21,6 +24,13 @@ public class ManWomanPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return NUM_ITEMS;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        registeredFragments.put(position, fragment);
+        return fragment;
     }
 
     /**
@@ -50,5 +60,9 @@ public class ManWomanPagerAdapter extends FragmentPagerAdapter {
                 return "Man";
         }
         return "ERROR";
+    }
+
+    public SparseArray<Fragment> getRegisteredFragments() {
+        return registeredFragments;
     }
 }
